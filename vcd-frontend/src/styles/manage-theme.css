@@ -1,0 +1,195 @@
+/**
+ * VCD 全局主题：Indigo 主色 + Zinc 中性色
+ * 日间 / 夜间通过 :root 与 html.dark 切换
+ */
+
+/* ========== 设计令牌 ========== */
+:root {
+  /* 品牌主色 Indigo */
+  --vcd-primary: #6366f1;
+  --vcd-primary-hover: #4f46e5;
+  --vcd-primary-active: #4338ca;
+  --vcd-primary-soft: rgba(99, 102, 241, 0.14);
+  --vcd-primary-glow: rgba(99, 102, 241, 0.45);
+
+  /* 页面与表面 */
+  --vcd-bg-app: #f4f4f5;
+  --vcd-bg-elevated: #ffffff;
+  --vcd-bg-header: rgba(255, 255, 255, 0.92);
+  --vcd-border: #e4e4e7;
+  --vcd-border-strong: #d4d4d8;
+  --vcd-text: #18181b;
+  --vcd-text-secondary: #52525b;
+  --vcd-text-muted: #71717a;
+
+  /* 侧栏（日间：浅底，与主内容区协调） */
+  --vcd-sidebar-bg: linear-gradient(180deg, #ffffff 0%, #fafafa 50%, #f4f4f5 100%);
+  --vcd-sidebar-header: #ffffff;
+  --vcd-sidebar-footer: #fafafa;
+  --vcd-sidebar-border: #e4e4e7;
+  --vcd-sidebar-item: #52525b;
+  --vcd-sidebar-item-hover-bg: rgba(99, 102, 241, 0.1);
+  --vcd-sidebar-item-hover-fg: #18181b;
+  --vcd-sidebar-logo-fg: #18181b;
+  --vcd-sidebar-user-fg: #52525b;
+  --vcd-sidebar-active: var(--vcd-primary);
+  --vcd-sidebar-active-shadow: 0 4px 16px var(--vcd-primary-glow);
+  --vcd-sidebar-elev-shadow: 1px 0 0 rgba(0, 0, 0, 0.04), 4px 0 24px rgba(15, 23, 42, 0.06);
+
+  /* Element Plus 主色链 */
+  --el-color-primary: var(--vcd-primary);
+  --el-color-primary-light-3: #818cf8;
+  --el-color-primary-light-5: #a5b4fc;
+  --el-color-primary-light-7: #c7d2fe;
+  --el-color-primary-light-9: #e0e7ff;
+  --el-color-primary-dark-2: var(--vcd-primary-hover);
+
+  --el-bg-color: var(--vcd-bg-elevated);
+  --el-text-color-primary: var(--vcd-text);
+  --el-text-color-regular: var(--vcd-text-secondary);
+  --el-text-color-secondary: var(--vcd-text-muted);
+  --el-border-color: var(--vcd-border);
+  --el-border-color-light: #f4f4f5;
+  --el-border-radius-base: 10px;
+}
+
+html.dark {
+  --vcd-primary: #818cf8;
+  --vcd-primary-hover: #a5b4fc;
+  --vcd-primary-active: #6366f1;
+  --vcd-primary-soft: rgba(129, 140, 248, 0.18);
+  --vcd-primary-glow: rgba(129, 140, 248, 0.35);
+
+  --vcd-bg-app: #09090b;
+  --vcd-bg-elevated: #18181b;
+  --vcd-bg-header: rgba(24, 24, 27, 0.92);
+  --vcd-border: #27272a;
+  --vcd-border-strong: #3f3f46;
+  --vcd-text: #fafafa;
+  --vcd-text-secondary: #d4d4d8;
+  --vcd-text-muted: #a1a1aa;
+
+  --vcd-sidebar-bg: linear-gradient(165deg, #0c0c0e 0%, #09090b 50%, #000000 100%);
+  --vcd-sidebar-header: #000000;
+  --vcd-sidebar-footer: #000000;
+  --vcd-sidebar-border: rgba(255, 255, 255, 0.08);
+  --vcd-sidebar-item: #a1a1aa;
+  --vcd-sidebar-item-hover-bg: rgba(255, 255, 255, 0.08);
+  --vcd-sidebar-item-hover-fg: #fafafa;
+  --vcd-sidebar-logo-fg: #fafafa;
+  --vcd-sidebar-user-fg: #d4d4d8;
+  --vcd-sidebar-active: var(--vcd-primary);
+  --vcd-sidebar-active-shadow: 0 4px 24px rgba(129, 140, 248, 0.25);
+  --vcd-sidebar-elev-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
+
+  --el-color-primary-light-3: #6366f1;
+  --el-color-primary-light-5: #818cf8;
+  --el-color-primary-light-7: #a5b4fc;
+  --el-color-primary-light-9: rgba(99, 102, 241, 0.2);
+  --el-color-primary-dark-2: #c7d2fe;
+
+  --el-border-color-light: #27272a;
+}
+
+html,
+body {
+  background: var(--vcd-bg-app);
+}
+
+/* ========== 表格 ========== */
+.el-table {
+  --el-table-header-bg-color: var(--vcd-bg-elevated);
+  --el-table-border-color: var(--vcd-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.el-table th.el-table__cell {
+  font-weight: 600;
+  color: var(--vcd-text);
+  background: var(--vcd-bg-app) !important;
+}
+
+html.dark .el-table th.el-table__cell {
+  background: #18181b !important;
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+  background: var(--vcd-bg-app);
+}
+
+html.dark .el-table {
+  --el-table-bg-color: #18181b;
+  --el-table-tr-bg-color: #18181b;
+}
+
+/* ========== 卡片 ========== */
+.el-card {
+  --el-card-border-radius: 14px;
+  --el-card-border-color: var(--vcd-border);
+  border: 1px solid var(--vcd-border);
+  background: var(--vcd-bg-elevated);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 4px 16px rgba(15, 23, 42, 0.06) !important;
+}
+
+html.dark .el-card {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ========== 主按钮 ========== */
+.el-button--primary {
+  --el-button-hover-bg-color: var(--vcd-primary-hover);
+  --el-button-hover-border-color: var(--vcd-primary-hover);
+  font-weight: 600;
+}
+
+/* ========== 管理布局（ManageApp） ========== */
+.manage-layout .top-header {
+  background: var(--vcd-bg-header);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--vcd-border);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+
+html.dark .manage-layout .top-header {
+  box-shadow: none;
+}
+
+.manage-layout .header-clock,
+.manage-layout .action-item {
+  color: var(--vcd-text-muted);
+}
+
+.manage-layout .main-content {
+  background: var(--vcd-bg-app);
+}
+
+.manage-layout .el-breadcrumb__inner {
+  color: var(--vcd-text-secondary);
+  font-weight: 500;
+}
+
+.manage-layout .el-breadcrumb__separator {
+  color: var(--vcd-text-muted);
+}
+
+.manage-layout .theme-toggle-btn {
+  border: 1px solid var(--vcd-border);
+  background: var(--vcd-bg-elevated);
+  color: var(--vcd-text-secondary);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.manage-layout .theme-toggle-btn:hover {
+  border-color: var(--vcd-primary);
+  color: var(--vcd-primary);
+  background: var(--vcd-primary-soft);
+}
+
+html.dark .manage-layout .theme-toggle-btn:hover {
+  color: var(--vcd-primary);
+}
