@@ -5,14 +5,14 @@
 
 /* ========== 设计令牌 ========== */
 :root {
-  /* 品牌主色 Indigo */
+  /* 品牌主色：原版 Indigo 蓝紫色，按钮/链接颜色保持蓝色 */
   --vcd-primary: #6366f1;
   --vcd-primary-hover: #4f46e5;
   --vcd-primary-active: #4338ca;
   --vcd-primary-soft: rgba(99, 102, 241, 0.14);
   --vcd-primary-glow: rgba(99, 102, 241, 0.45);
 
-  /* 页面与表面 */
+  /* 页面与表面：白色调，恢复原版 */
   --vcd-bg-app: #f4f4f5;
   --vcd-bg-elevated: #ffffff;
   --vcd-bg-header: rgba(255, 255, 255, 0.92);
@@ -22,33 +22,33 @@
   --vcd-text-secondary: #52525b;
   --vcd-text-muted: #71717a;
 
-  /* 侧栏（日间：浅底，与主内容区协调） */
-  --vcd-sidebar-bg: linear-gradient(180deg, #ffffff 0%, #fafafa 50%, #f4f4f5 100%);
-  --vcd-sidebar-header: #ffffff;
-  --vcd-sidebar-footer: #fafafa;
-  --vcd-sidebar-border: #e4e4e7;
-  --vcd-sidebar-item: #52525b;
-  --vcd-sidebar-item-hover-bg: rgba(99, 102, 241, 0.1);
-  --vcd-sidebar-item-hover-fg: #18181b;
-  --vcd-sidebar-logo-fg: #18181b;
-  --vcd-sidebar-user-fg: #52525b;
-  --vcd-sidebar-active: var(--vcd-primary);
-  --vcd-sidebar-active-shadow: 0 4px 16px var(--vcd-primary-glow);
-  --vcd-sidebar-elev-shadow: 1px 0 0 rgba(0, 0, 0, 0.04), 4px 0 24px rgba(15, 23, 42, 0.06);
+  /* 侧栏：保留旧版暖棕米色风格 */
+  --vcd-sidebar-bg: #fdf8f3;
+  --vcd-sidebar-header: #fdf5e6;
+  --vcd-sidebar-footer: #fdf5e6;
+  --vcd-sidebar-border: rgba(93, 64, 55, 0.1);
+  --vcd-sidebar-item: #5d4037;
+  --vcd-sidebar-item-hover-bg: rgba(93, 64, 55, 0.06);
+  --vcd-sidebar-item-hover-fg: #3e2723;
+  --vcd-sidebar-logo-fg: #5d4037;
+  --vcd-sidebar-user-fg: #5d4037;
+  --vcd-sidebar-active: #c59434;
+  --vcd-sidebar-active-shadow: 0 4px 16px rgba(197, 148, 52, 0.35);
+  --vcd-sidebar-elev-shadow: 1px 0 0 rgba(93, 64, 55, 0.08), 4px 0 16px rgba(93, 64, 55, 0.06);
 
-  /* Element Plus 主色链 */
-  --el-color-primary: var(--vcd-primary);
+  /* Element Plus 主色链：恢复蓝紫色，确保编辑/主要按钮是蓝色 */
+  --el-color-primary: #6366f1;
   --el-color-primary-light-3: #818cf8;
   --el-color-primary-light-5: #a5b4fc;
   --el-color-primary-light-7: #c7d2fe;
   --el-color-primary-light-9: #e0e7ff;
-  --el-color-primary-dark-2: var(--vcd-primary-hover);
+  --el-color-primary-dark-2: #4f46e5;
 
-  --el-bg-color: var(--vcd-bg-elevated);
-  --el-text-color-primary: var(--vcd-text);
-  --el-text-color-regular: var(--vcd-text-secondary);
-  --el-text-color-secondary: var(--vcd-text-muted);
-  --el-border-color: var(--vcd-border);
+  --el-bg-color: #ffffff;
+  --el-text-color-primary: #18181b;
+  --el-text-color-regular: #52525b;
+  --el-text-color-secondary: #71717a;
+  --el-border-color: #e4e4e7;
   --el-border-color-light: #f4f4f5;
   --el-border-radius-base: 10px;
 }
@@ -93,7 +93,7 @@ html.dark {
 
 html,
 body {
-  background: var(--vcd-bg-app);
+  background: transparent;
 }
 
 /* ========== 表格 ========== */
@@ -115,7 +115,7 @@ html.dark .el-table th.el-table__cell {
 }
 
 .el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
-  background: var(--vcd-bg-app);
+  background: transparent;
 }
 
 html.dark .el-table {
@@ -165,7 +165,7 @@ html.dark .manage-layout .top-header {
 }
 
 .manage-layout .main-content {
-  background: var(--vcd-bg-app);
+  background: transparent;
 }
 
 .manage-layout .el-breadcrumb__inner {
@@ -192,4 +192,18 @@ html.dark .manage-layout .top-header {
 
 html.dark .manage-layout .theme-toggle-btn:hover {
   color: var(--vcd-primary);
+}
+/* 让中间内容区透明，显示固定背景图 */
+.manage-layout {
+  background: transparent !important;
+}
+
+.main-wrapper {
+  background: transparent !important;
+}
+
+.page-container,
+.sales-page {
+  background: transparent !important;
+  box-shadow: none !important;
 }

@@ -63,8 +63,9 @@
         </el-col>
 
         <!-- 中间 (50%)：中国地图 -->
-        <el-col :xs="24" :lg="12">
-          <el-card class="map-card" shadow="hover">
+                <!-- 中间列：地图 + 营收趋势 -->
+        <el-col :xs="24" :lg="12" class="mid-col">
+          <el-card class="map-card side-panel" shadow="hover">
             <template #header>
               <div class="card-header">
                 <span class="card-title">全国用户分布与租借热力图</span>
@@ -73,9 +74,17 @@
             </template>
             <div ref="chartMapRef" class="chart-box map-box" />
           </el-card>
+          <el-card class="chart-card side-panel" shadow="hover">
+            <template #header>
+              <div class="card-header">
+                <span class="card-title">营收趋势</span>
+              </div>
+            </template>
+            <div ref="chartRevenueRef" class="chart-box revenue-chart-box" />
+          </el-card>
         </el-col>
 
-        <!-- 右侧 (30%)：图表组 -->
+        <!-- 右侧列：饼图 + 雷达图 + 近7日租借量 -->
         <el-col :xs="24" :lg="7" class="side-col">
           <el-card class="chart-card side-panel" shadow="hover">
             <template #header>
@@ -88,20 +97,19 @@
           <el-card class="chart-card side-panel" shadow="hover">
             <template #header>
               <div class="card-header">
-                <span class="card-title">营收趋势</span>
+                <span class="card-title">业务能力雷达</span>
               </div>
             </template>
-            <div ref="chartRevenueRef" class="chart-box small-chart" />
+            <div ref="chartRadarRef" class="chart-box radar-chart-box" />
           </el-card>
           <el-card class="chart-card side-panel" shadow="hover">
             <template #header>
               <div class="card-header">
-                <span class="card-title">近 7 日租借量</span>
+                <span class="card-title">近7日租借量</span>
               </div>
             </template>
             <div ref="chartRecentRef" class="chart-box small-chart" />
           </el-card>
-
         </el-col>
       </el-row>
     </div>
@@ -123,7 +131,7 @@ import {
 } from '@element-plus/icons-vue'
 import UserDashboardView from './UserDashboardView.vue'
 import * as echarts from 'echarts/core'
-import { BarChart, LineChart, PieChart, MapChart, FunnelChart } from 'echarts/charts'
+import { BarChart, LineChart, PieChart, MapChart, FunnelChart, RadarChart } from 'echarts/charts'
 import {
   TitleComponent,
   TooltipComponent,
@@ -146,6 +154,7 @@ echarts.use([
   VisualMapComponent,
   GeoComponent,
   BarChart,
+  RadarChart,
   LineChart,
   PieChart,
   MapChart,
@@ -241,6 +250,7 @@ const chartMapRef = ref(null)
 const chartPieRef = ref(null)
 const chartRecentRef = ref(null)
 const chartRevenueRef = ref(null)
+const chartRadarRef = ref(null)
 const chartRankRef = ref(null)
 const chartPendingRef = ref(null)
 let chartInstances = []
@@ -422,7 +432,7 @@ function initCharts() {
     const data = rankRange.value === 'month' 
       ? stats.monthlyTrends[stats.monthlyTrends.length - 1]?.topVcds || []
       : stats.top10Vcds
-    const chartData = data.slice(0, 5).reverse()
+    const chartData = data.slice(0, 10).reverse()
     chart.setOption({
       ...createBaseOption(),
       grid: { left: '3%', right: '12%', bottom: '3%', top: '5%', containLabel: true },
@@ -440,14 +450,20 @@ function initCharts() {
           fontSize: 12,
           color: T.axisLabel,
           fontWeight: 500,
-          width: 72,
-          overflow: 'truncate'
+          width: 80,
+          overflow: 'truncate',
+          formatter: (value, index) => {
+            const total = chartData.length
+            const rank = total - index
+            if (rank <= 3) return '\u25cf ' + value
+            return value
+          }
         }
       },
       series: [{
         type: 'bar',
         data: chartData.map(d => d.count),
-        barWidth: 15,
+        barWidth: 10,
         itemStyle: {
           borderRadius: [0, 10, 10, 0],
           color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [
@@ -592,6 +608,53 @@ function initCharts() {
         },
         lineStyle: { width: 3, color: T.secondary },
         emphasis: { lineStyle: { width: 4 } }
+      }]
+    })
+    chartInstances.push(chart)
+  }
+
+  if (chartRadarRef.value) {
+    const radarEl = chartRadarRef.value
+    const chart = echarts.init(radarEl, null, { width: radarEl.offsetWidth || 200, height: 172 })
+    const T = chartTheme()
+    chart.setOption({
+      ...createBaseOption(),
+      radar: {
+        indicator: [
+          { name: '租赁活跃', max: 100 },
+          { name: '库存充足', max: 100 },
+          { name: '客户黏性', max: 100 },
+          { name: '销售转化', max: 100 },
+          { name: '归还及时', max: 100 }
+        ],
+        center: ['50%', '55%'],
+        shape: 'circle',
+        splitNumber: 4,
+        axisName: { color: T.axisLabel, fontSize: 11, fontWeight: 500 },
+        splitLine: { lineStyle: { color: T.splitLine } },
+        splitArea: { areaStyle: { color: ['rgba(99,102,241,0.04)', 'rgba(99,102,241,0.08)', 'rgba(99,102,241,0.12)', 'rgba(99,102,241,0.16)'] } },
+        axisLine: { lineStyle: { color: T.splitLine } }
+      },
+      series: [{
+        type: 'radar',
+        data: [{
+          value: [
+            Math.min(100, Math.round((stats.totalRentals / Math.max(stats.totalVcds, 1)) * 10)),
+            Math.min(100, Math.round(((stats.totalVcds - stats.overdueCount) / Math.max(stats.totalVcds, 1)) * 100)),
+            Math.min(100, Math.round((stats.totalCustomers / Math.max(stats.totalRentals, 1)) * 100)),
+            Math.min(100, Math.round((stats.totalRentals / Math.max(stats.totalCustomers, 1)) * 20)),
+            Math.min(100, Math.round(((stats.totalRentals - stats.overdueCount) / Math.max(stats.totalRentals, 1)) * 100))
+          ],
+          name: '当前业务',
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: 'rgba(99,102,241,0.45)' },
+              { offset: 1, color: 'rgba(99,102,241,0.1)' }
+            ])
+          },
+          lineStyle: { color: T.primary, width: 2 },
+          itemStyle: { color: T.primary }
+        }]
       }]
     })
     chartInstances.push(chart)
@@ -763,6 +826,18 @@ onBeforeUnmount(() => {
   border-radius: 12px;
 }
 
+.table-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-card :deep(.el-card__body) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .card-header {
   display: flex;
   align-items: center;
@@ -829,23 +904,49 @@ onBeforeUnmount(() => {
 .map-card {
   border: none;
   border-radius: 12px;
-  height: 90%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-card :deep(.el-card__body) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
 }
 
 .map-box {
-  height: 500px;
+  flex: 1;
+  min-height: 200px;
+}
+
+.mid-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.revenue-chart-box {
+  height: 160px;
 }
 
 .rank-chart-box {
-  height: 170px;
+  height: 340px;
 }
 
 .pending-chart-box {
-  height: 172px;
+  flex: 1;
+  min-height: 120px;
 }
 
 .small-chart {
   height: 172px;
+}
+
+.radar-chart-box {
+  height: 172px;
+  width: 100%;
 }
 
 .pending-table :deep(.el-table__inner-wrapper::before) { display: none; }

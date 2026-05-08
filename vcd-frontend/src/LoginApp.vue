@@ -71,6 +71,7 @@
         <el-form-item label="确认密码" prop="confirm">
           <el-input v-model="regForm.confirm" type="password" show-password placeholder="再次输入密码" />
         </el-form-item>
+              <div class="reg-hint">店员名不能重复，密码必须同时有字母和数字，且密码长度大于等于6</div>
       </el-form>
       <template #footer>
         <el-button @click="registerVisible = false">取消</el-button>
@@ -103,8 +104,23 @@ const regRef = ref(null)
 const regForm = ref({ username: '', password: '', confirm: '' })
 
 const regRules = {
-  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  username: [
+    { required: true, message: '请输入店员名', trigger: 'blur' },
+    { min: 1, max: 50, message: '店员名长度不能超过50个字符', trigger: 'blur' }
+  ],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    {
+      validator: (_, v, cb) => {
+        if (!v || v.length < 6) return cb(new Error('密码长度必须大于等于6位'))
+        const hasLetter = /[a-zA-Z]/.test(v)
+        const hasDigit  = /[0-9]/.test(v)
+        if (!hasLetter || !hasDigit) return cb(new Error('密码必须同时包含字母和数字'))
+        cb()
+      },
+      trigger: 'blur'
+    }
+  ],
   confirm: [
     { required: true, message: '请确认密码', trigger: 'blur' },
     {
@@ -116,7 +132,6 @@ const regRules = {
     }
   ]
 }
-
 const login = async () => {
   if (!form.value.username || !form.value.password) {
     ElMessage.warning('请输入用户名和密码')
@@ -155,8 +170,14 @@ const submitRegister = async () => {
     registerVisible.value = false
     regForm.value = { username: '', password: '', confirm: '' }
   } catch (e) {
-    ElMessage.error(e.response?.data?.message || '注册失败')
-  } finally {
+    const msg = e.response?.data?.message || e.response?.data || '注册失败'
+    ElMessage({
+      message: typeof msg === 'string' ? msg : '注册失败',
+      type: 'error',
+      duration: 4000,
+      showClose: true
+    })
+    } finally {
     regLoading.value = false
   }
 }
@@ -167,12 +188,8 @@ const submitRegister = async () => {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(165deg, #eef2ff 0%, #f4f4f5 42%, #fafafa 100%);
-  font-family:
-    'Inter',
-    'PingFang SC',
-    'Microsoft YaHei',
-    sans-serif;
+  background: #fdf5e6;
+  font-family: 'Microsoft YaHei', 'PingFang SC', 'Source Han Serif SC', 'SimSun', serif, sans-serif;
 }
 
 .top-nav {
@@ -180,10 +197,9 @@ const submitRegister = async () => {
   align-items: center;
   justify-content: space-between;
   padding: 0 48px;
-  height: 58px;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid #e4e4e7;
+  height: 56px;
+  background: #fdf5e6;
+  border-bottom: 1px solid rgba(93, 64, 55, 0.08);
   flex-shrink: 0;
 }
 
@@ -194,50 +210,43 @@ const submitRegister = async () => {
 }
 
 .login-theme-btn {
-  border: 1px solid #e4e4e7;
-  background: #ffffff;
-  color: #52525b;
-  transition:
-    border-color 0.2s,
-    color 0.2s,
-    background 0.2s;
+  border: 1px solid rgba(93, 64, 55, 0.2);
+  background: transparent;
+  color: #5d4037;
+  transition: border-color 0.2s, color 0.2s;
 }
 
 .login-theme-btn:hover {
-  border-color: #6366f1;
-  color: #4f46e5;
-  background: rgba(99, 102, 241, 0.08);
+  border-color: #c59434;
+  color: #c59434;
 }
 
 .brand {
-  font-size: 20px;
-  font-weight: 700;
-  color: #18181b;
-  letter-spacing: 0.04em;
+  font-size: 22px;
+  font-weight: 600;
+  color: #5d4037;
+  letter-spacing: 0.05em;
 }
 
 .nav-links {
   display: flex;
-  gap: 28px;
+  gap: 32px;
 }
 
 .nav-item {
-  color: #52525b;
+  color: #5d4037;
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
   padding-bottom: 4px;
   border-bottom: 2px solid transparent;
-  transition: color 0.2s;
 }
 
 .nav-item:hover {
-  color: #18181b;
+  color: #3e2723;
 }
 
 .nav-item.active {
-  color: #4f46e5;
-  border-bottom-color: #6366f1;
+  border-bottom-color: #c59434;
 }
 
 .hero {
@@ -250,13 +259,8 @@ const submitRegister = async () => {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(
-      125deg,
-      rgba(15, 23, 42, 0.82) 0%,
-      rgba(218, 226, 199, 0.55) 45%,
-      rgba(99, 102, 241, 0.35) 100%
-    ),
-    url('/images/login-library.jpg') center / cover no-repeat;
+    linear-gradient(rgba(45, 36, 28, 0.55), rgba(45, 36, 28, 0.55)),
+    url('/images/beijing.jpg') center / cover no-repeat;
 }
 
 .hero-inner {
@@ -295,7 +299,7 @@ const submitRegister = async () => {
 .hero-line {
   width: 56px;
   height: 3px;
-  background: linear-gradient(90deg, #a5b4fc, #6366f1);
+  background: linear-gradient(90deg, #d4a017, #f0d060);
   border-radius: 2px;
   margin-top: 24px;
 }
@@ -304,27 +308,25 @@ const submitRegister = async () => {
   width: 380px;
   flex-shrink: 0;
   padding: 40px 36px 36px;
-  background: rgba(255, 255, 255, 0.94);
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow:
-    0 4px 6px -1px rgba(15, 23, 42, 0.06),
-    0 24px 48px -12px rgba(79, 70, 229, 0.18);
-  backdrop-filter: blur(12px);
+  background: url('/images/zhuzi.jpg') center / cover no-repeat;
+  border-radius: 16px;
+  border: 1px solid rgba(93, 64, 55, 0.12);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
 }
 
 .card-title {
   margin: 0;
-  font-size: 26px;
-  color: #18181b;
+  font-size: 28px;
+  color: #5d4037;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: 'Source Han Serif SC', 'SimSun', serif;
 }
 
 .card-sub {
   margin: 10px 0 28px;
   font-size: 14px;
-  color: #71717a;
+  color: #8d6e63;
+  font-weight: 600;
 }
 
 .card-fields {
@@ -335,48 +337,43 @@ const submitRegister = async () => {
 }
 
 .field-input :deep(.el-input__wrapper) {
-  border-radius: 12px;
-  background: #fafafa;
+  border-radius: 24px;
+  background: #f0f7ff;
   box-shadow: none;
-  border: 1px solid #e4e4e7;
+  border: 1px solid rgba(93, 64, 55, 0.12);
   padding: 6px 16px;
-  transition:
-    border-color 0.2s,
-    background 0.2s;
 }
 
 .field-input :deep(.el-input__wrapper:hover),
 .field-input :deep(.el-input__wrapper.is-focus) {
-  border-color: #a5b4fc;
-  background: #ffffff;
+  border-color: #c59434;
+  background: #fff;
 }
 
 .btn-gold {
   width: 100%;
-  height: 46px;
-  border-radius: 12px;
+  height: 44px;
+  border-radius: 22px;
   border: none;
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  background: linear-gradient(180deg, #e8b923, #c59434);
   color: #fff;
   font-size: 16px;
   font-weight: 600;
-  box-shadow: 0 8px 20px -4px rgba(79, 70, 229, 0.45);
-  transition:
-    filter 0.2s,
-    box-shadow 0.2s;
+  box-shadow: 0 4px 12px rgba(197, 148, 52, 0.4);
+  transition: filter 0.2s;
 }
 
 .btn-gold:hover {
-  filter: brightness(1.06);
-  box-shadow: 0 10px 24px -4px rgba(79, 70, 229, 0.55);
+  filter: brightness(1.05);
 }
 
 .divider {
   display: flex;
   align-items: center;
   margin: 20px 0;
-  color: #a1a1aa;
+  color: #a1887f;
   font-size: 13px;
+  font-weight: 600;
 }
 
 .divider::before,
@@ -384,7 +381,7 @@ const submitRegister = async () => {
   content: '';
   flex: 1;
   height: 1px;
-  background: #e4e4e7;
+  background: rgba(93, 64, 55, 0.2);
 }
 
 .divider span {
@@ -393,23 +390,28 @@ const submitRegister = async () => {
 
 .btn-outline {
   width: 100%;
-  height: 46px;
-  border-radius: 12px;
+  height: 44px;
+  border-radius: 22px;
   background: transparent;
-  border: 1px solid #d4d4d8;
-  color: #52525b;
+  border: 1px solid #c59434;
+  color: #5d4037;
   font-size: 15px;
   font-weight: 500;
-  transition:
-    border-color 0.2s,
-    color 0.2s,
-    background 0.2s;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 
 .btn-outline:hover {
-  background: rgba(99, 102, 241, 0.06);
-  border-color: #818cf8;
-  color: #4f46e5;
+  background: rgba(197, 148, 52, 0.12);
+  border-color: #b8860b;
+  color: #3e2723;
+}
+
+.reg-hint {
+  font-size: 11px;
+  color: #ef4444;
+  line-height: 1.5;
+  margin-top: 8px;
+  padding: 0 2px;
 }
 
 @media (max-width: 900px) {
@@ -433,91 +435,48 @@ const submitRegister = async () => {
 </style>
 
 <style>
-/* 登录页夜间：Indigo + Zinc，与全局 html.dark 一致 */
-html.dark .login-page {
-  background: linear-gradient(165deg, #0c0c0f 0%, #09090b 50%, #000000 100%);
+/* 修复白边和弹窗抖动 */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
 }
 
-html.dark .login-page .top-nav {
-  background: rgba(9, 9, 11, 0.85);
-  border-bottom-color: #27272a;
+/* 禁止Element Plus弹窗打开时给body加padding-right导致背景抖动 */
+body.el-popup-parent--hidden {
+  padding-right: 0 !important;
 }
 
-html.dark .login-page .brand {
-  color: #fafafa;
+/* 创建新账户弹窗背景图 */
+.el-overlay .el-dialog {
+  background: url('/images/xinzhanghu.jpg') center / cover no-repeat !important;
 }
 
-html.dark .login-page .nav-item {
-  color: #a1a1aa;
+.el-overlay .el-dialog .el-dialog__header {
+  background: transparent;
 }
 
-html.dark .login-page .nav-item:hover {
-  color: #fafafa;
+.el-overlay .el-dialog .el-dialog__body {
+  background: transparent;
 }
 
-html.dark .login-page .nav-item.active {
-  color: #a5b4fc;
-  border-bottom-color: #818cf8;
+.el-overlay .el-dialog .el-dialog__footer {
+  background: transparent;
 }
 
-html.dark .login-page .login-theme-btn {
-  border-color: #3f3f46;
-  background: #18181b;
-  color: #d4d4d8;
+
+/* 创建新账户弹窗字体加粗 */
+.el-overlay .el-dialog .el-form-item__label {
+  font-weight: 600;
 }
 
-html.dark .login-page .login-theme-btn:hover {
-  border-color: #818cf8;
-  color: #a5b4fc;
-  background: rgba(129, 140, 248, 0.12);
+.el-overlay .el-dialog .el-dialog__title {
+  font-weight: 700;
 }
 
-html.dark .login-page .hero-bg {
-  filter: saturate(0.85) brightness(0.5);
+.el-overlay .el-dialog .el-input__inner {
+  font-weight: 500;
 }
 
-html.dark .login-page .login-card {
-  background: rgba(24, 24, 27, 0.92);
-  border-color: #27272a;
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.3),
-    0 24px 48px -8px rgba(0, 0, 0, 0.55);
-}
-
-html.dark .login-page .card-title {
-  color: #fafafa;
-}
-
-html.dark .login-page .card-sub {
-  color: #a1a1aa;
-}
-
-html.dark .login-page .field-input :deep(.el-input__wrapper) {
-  background: #18181b;
-  border-color: #3f3f46;
-}
-
-html.dark .login-page .field-input :deep(.el-input__wrapper.is-focus) {
-  border-color: #818cf8;
-}
-
-html.dark .login-page .divider {
-  color: #71717a;
-}
-
-html.dark .login-page .divider::before,
-html.dark .login-page .divider::after {
-  background: #3f3f46;
-}
-
-html.dark .login-page .btn-outline {
-  border-color: #52525b;
-  color: #d4d4d8;
-}
-
-html.dark .login-page .btn-outline:hover {
-  background: rgba(129, 140, 248, 0.12);
-  border-color: #818cf8;
-  color: #a5b4fc;
-}
 </style>

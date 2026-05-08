@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # VCD 管理系统
 
 基于 **Spring Boot 3** + **Vue 3** + **SQL Server** 的 VCD 租赁/进销存管理项目。前端为双入口：`login.html`（登录）、`manage.html`（管理后台）。
@@ -173,3 +174,6 @@ ruanjianjiagou/
 ## 八、许可证
 
 以项目实际情况为准；若未特别声明，默认遵循仓库内已有约定。
+=======
+# vcd-management-system-pro
+>>>>>>> 1f7cff34433ba398200af979b4e0ce1caa1126de

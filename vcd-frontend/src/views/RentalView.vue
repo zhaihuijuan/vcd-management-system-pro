@@ -87,7 +87,7 @@ const loadData = async () => {
   loading.value = true
   try {
     const res = await rentalApi.getAll()
-    tableData.value = res.data
+    tableData.value = res.data.sort((a, b) => String(b.rentalDate).localeCompare(String(a.rentalDate)))
   } finally {
     loading.value = false
   }

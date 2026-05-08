@@ -30,7 +30,7 @@
       </el-table-column>
       <el-table-column label="操作" width="220" align="center" fixed="right">
         <template #default="{ row }">
-          <el-button size="small" @click="openView(row)">查看</el-button>
+          <el-button size="small" type="success" @click="openView(row)">查看</el-button>
           <el-button size="small" type="primary" @click="openEdit(row)">编辑</el-button>
           <el-button size="small" type="danger" @click="handleDelete(row.id)">删除</el-button>
         </template>
@@ -107,7 +107,7 @@ const customers = ref([])
 const loading = ref(false)
 const keyword = ref('')
 const currentPage = ref(1)
-const pageSize = 10
+const pageSize = 20
 
 const dialogVisible = ref(false)
 const dialogMode = ref('add')

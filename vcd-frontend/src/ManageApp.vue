@@ -1,10 +1,12 @@
 <template>
   <div class="manage-layout">
+    <!-- 固定背景图层，不随页面切换移动 -->
+    <div class="bg-fixed-layer"></div>
     <!-- 侧边栏 -->
     <aside class="side-nav">
       <div class="logo-area">
         <div class="logo-icon">V</div>
-        <span class="logo-text">VCD Pro</span>
+        <span class="logo-text">VCD管理系统</span>
       </div>
 
       <el-menu
@@ -109,9 +111,7 @@
 
       <main class="main-content">
         <router-view v-slot="{ Component }">
-          <transition name="fade-transform" mode="out-in">
-            <component :is="Component" />
-          </transition>
+          <component :is="Component" />
         </router-view>
       </main>
     </div>
@@ -233,6 +233,25 @@ body {
 #app {
   height: 100%;
 }
+
+.bg-fixed-layer {
+  position: fixed;
+  top: 0;
+  left: 260px;
+  right: 0;
+  bottom: 0;
+  background: url('/images/dabeijing.jpg') center / cover no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-fixed-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.72);
+}
+
 </style>
 
 <style scoped>
@@ -269,7 +288,7 @@ body {
 .logo-icon {
   width: 36px;
   height: 36px;
-  background: linear-gradient(145deg, var(--vcd-primary) 0%, var(--vcd-primary-active) 100%);
+  background: linear-gradient(145deg, #c59434 0%, #a07820 100%);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -277,7 +296,7 @@ body {
   font-weight: 800;
   font-size: 18px;
   color: #fff;
-  box-shadow: 0 4px 14px var(--vcd-primary-glow);
+  box-shadow: 0 4px 14px rgba(197, 148, 52, 0.4);
 }
 
 .logo-text {
@@ -312,9 +331,11 @@ body {
 }
 
 .modern-menu :deep(.el-menu-item.is-active) {
-  background: var(--vcd-sidebar-active) !important;
-  color: #ffffff !important;
-  box-shadow: var(--vcd-sidebar-active-shadow);
+  background: #efe6dc !important;
+  color: #5d4037 !important;
+  border-left: 3px solid #c59434;
+  padding-left: 17px !important;
+  box-shadow: none;
 }
 
 .side-footer {
@@ -356,6 +377,10 @@ body {
   min-width: 0;
 }
 
+
+
+
+
 .top-header {
   height: 64px;
   display: flex;
@@ -363,6 +388,8 @@ body {
   justify-content: space-between;
   padding: 0 28px 0 32px;
   flex-shrink: 0;
+  background: #fdf5e6;
+  border-bottom: 1px solid rgba(93, 64, 55, 0.1);
 }
 
 .header-actions {
@@ -394,6 +421,8 @@ body {
   flex: 1;
   padding: 22px 26px;
   overflow-y: auto;
+  position: relative;
+  z-index: 1;
 }
 
 /* 动画 */

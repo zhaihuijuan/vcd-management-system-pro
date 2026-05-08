@@ -25,22 +25,18 @@ public class RentalRecordsServiceImpl implements RentalRecordsService {
     @Override
     @Transactional
     public RentalRecords createRentalRecord(RentalRecords record) {
-        // 设置默认租赁日期
         if (record.getRentalDate() == null) {
             record.setRentalDate(LocalDate.now());
         }
 
-        // 触发器逻辑：检查库存并增加租出数量
         VcdInventory inventory = vcdInventoryRepository.findByVcd(record.getVcd())
-                .orElseThrow(() -> new NoSuchElementException("VCD库存不存在"));
+                .orElseThrow(() -> new NoSuchElementException("VCD\u5e93\u5b58\u4e0d\u5b58\u5728"));
 
-        // 检查可用库存（总库存 - 已租出数量）
         int availableStock = inventory.getStock() - inventory.getRentCount();
         if (availableStock <= 0) {
-            throw new IllegalStateException("VCD库存不足，无法租赁");
+            throw new IllegalStateException("VCD\u5e93\u5b58\u4e0d\u8db3\uff0c\u65e0\u6cd5\u79df\u8d41");
         }
 
-        // 增加租出数量
         inventory.setRentCount(inventory.getRentCount() + 1);
         vcdInventoryRepository.save(inventory);
 
@@ -60,7 +56,19 @@ public class RentalRecordsServiceImpl implements RentalRecordsService {
     }
 
     @Override
+    @Transactional
     public void deleteRentalRecord(Long id) {
+        RentalRecords rental = rentalRecordsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("\u79df\u8d41\u8bb0\u5f55\u4e0d\u5b58\u5728"));
+
+        if (!rental.isReturned()) {
+            VcdInventory inventory = vcdInventoryRepository.findByVcd(rental.getVcd())
+                    .orElseThrow(() -> new NoSuchElementException("VCD\u5e93\u5b58\u4e0d\u5b58\u5728"));
+            int newRentCount = Math.max(0, inventory.getRentCount() - 1);
+            inventory.setRentCount(newRentCount);
+            vcdInventoryRepository.save(inventory);
+        }
+
         rentalRecordsRepository.deleteById(id);
     }
 }

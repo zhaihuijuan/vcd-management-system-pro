@@ -23,10 +23,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
+        // 禁止使用内置管理员用户名
         if (BuiltinAdmin.USERNAME.equalsIgnoreCase(user.getUsername())) {
-            throw new RuntimeException("该用户名不可用");
+            throw new RuntimeException("\u5e97\u5458\u540d\u4e0d\u80fd\u91cd\u590d");
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // 检查用户名是否已存在
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new RuntimeException("\u5e97\u5458\u540d\u4e0d\u80fd\u91cd\u590d");
+        }
+        // 校验密码：长度>=6，且同时包含字母和数字
+        String pwd = user.getPassword();
+        if (pwd == null || pwd.length() < 6) {
+            throw new RuntimeException("\u5bc6\u7801\u957f\u5ea6\u5fc5\u987b\u5927\u4e8e\u7b49\u4e8e6\u4f4d");
+        }
+        boolean hasLetter = pwd.chars().anyMatch(Character::isLetter);
+        boolean hasDigit  = pwd.chars().anyMatch(Character::isDigit);
+        if (!hasLetter || !hasDigit) {
+            throw new RuntimeException("\u5bc6\u7801\u5fc5\u987b\u540c\u65f6\u5305\u542b\u5b57\u6bcd\u548c\u6570\u5b57");
+        }
+        user.setPassword(passwordEncoder.encode(pwd));
         if (user.getRole() == null) {
             user.setRole(UserRole.USER);
         }
@@ -86,11 +101,10 @@ public class UserServiceImpl implements UserService {
             builtin.setUpdatedAt(now);
             return builtin;
         }
-
         User existingUser = userRepository.findByUsername(user.getUsername())
-                .orElseThrow(() -> new RuntimeException("用户不存在"));
+                .orElseThrow(() -> new RuntimeException("\u7528\u6237\u4e0d\u5b58\u5728"));
         if (!passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
-            throw new RuntimeException("密码错误");
+            throw new RuntimeException("\u5bc6\u7801\u9519\u8bef");
         }
         return existingUser;
     }

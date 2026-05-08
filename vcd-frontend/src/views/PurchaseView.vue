@@ -70,7 +70,7 @@ const loadData = async () => {
   loading.value = true
   try {
     const res = await purchaseApi.getAll()
-    tableData.value = res.data
+    tableData.value = res.data.sort((a, b) => String(b.purchaseDate).localeCompare(String(a.purchaseDate)))
   } finally {
     loading.value = false
   }
