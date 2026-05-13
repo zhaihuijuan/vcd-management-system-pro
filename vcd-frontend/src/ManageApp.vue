@@ -252,6 +252,10 @@ body {
   background: rgba(255, 255, 255, 0.72);
 }
 
+html.dark .bg-fixed-layer::after {
+  background: rgba(0, 0, 0, 0.65);
+}
+
 </style>
 
 <style scoped>
@@ -388,8 +392,8 @@ body {
   justify-content: space-between;
   padding: 0 28px 0 32px;
   flex-shrink: 0;
-  background: #fdf5e6;
-  border-bottom: 1px solid rgba(93, 64, 55, 0.1);
+  background: var(--vcd-header-bg);
+  border-bottom: 1px solid var(--vcd-header-border);
 }
 
 .header-actions {

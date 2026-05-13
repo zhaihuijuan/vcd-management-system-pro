@@ -339,9 +339,9 @@ onMounted(async () => {
   align-items: center;
   gap: 16px;
   padding: 16px 18px;
-  border: 1px solid #dbe4f0;
+  border: 1px solid var(--vcd-card-border-alt);
   border-radius: 12px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  background: linear-gradient(180deg, var(--vcd-page-bg) 0%, var(--vcd-page-bg-soft) 100%);
 }
 
 .console-badge {
@@ -360,13 +360,13 @@ onMounted(async () => {
   margin-top: 10px;
   font-size: 20px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--vcd-page-title-alt);
 }
 
 .page-desc {
   margin: 0;
   margin-top: 6px;
-  color: #64748b;
+  color: var(--vcd-page-desc);
   line-height: 1.6;
 }
 
@@ -381,8 +381,8 @@ onMounted(async () => {
   overflow: hidden;
   padding: 18px;
   border-radius: 14px;
-  border: 1px solid #e2e8f0;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid var(--vcd-card-border);
+  background: linear-gradient(180deg, var(--vcd-page-bg) 0%, var(--vcd-page-bg-soft) 100%);
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
 }
 
@@ -402,7 +402,7 @@ onMounted(async () => {
 }
 
 .overview-card span {
-  color: #64748b;
+  color: var(--vcd-page-desc);
   font-size: 12px;
 }
 
@@ -410,7 +410,7 @@ onMounted(async () => {
 .progress-value {
   display: block;
   margin-top: 10px;
-  color: #0f172a;
+  color: var(--vcd-page-title-alt);
   font-size: 30px;
   line-height: 1;
   font-weight: 700;
@@ -471,7 +471,7 @@ onMounted(async () => {
 .side-panel,
 .table-panel {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--vcd-card-border);
   border-radius: 12px;
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
 }
@@ -498,7 +498,7 @@ onMounted(async () => {
 .panel-title {
   font-size: 17px;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--vcd-page-title-alt);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -523,7 +523,7 @@ onMounted(async () => {
   padding: 12px;
   border-radius: 12px;
   border: 1px solid #cbd5e1;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  background: linear-gradient(180deg, var(--vcd-page-bg) 0%, var(--vcd-page-bg-soft) 100%);
 }
 
 .queue-item::before {
@@ -562,19 +562,19 @@ onMounted(async () => {
 }
 
 .queue-action span {
-  color: #64748b;
+  color: var(--vcd-page-desc);
   font-size: 12px;
 }
 
 .queue-action strong {
-  color: #0f172a;
+  color: var(--vcd-page-title-alt);
   font-size: 12px;
 }
 
 .queue-meta,
 .queue-note {
   margin-top: 8px;
-  color: #64748b;
+  color: var(--vcd-page-desc);
   font-size: 12px;
   line-height: 1.5;
 }

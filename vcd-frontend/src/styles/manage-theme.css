@@ -51,6 +51,23 @@
   --el-border-color: #e4e4e7;
   --el-border-color-light: #f4f4f5;
   --el-border-radius-base: 10px;
+
+  /* 页面语义色 - 日间 */
+  --vcd-page-title: #1e293b;
+  --vcd-page-title-alt: #0f172a;
+  --vcd-page-desc: #64748b;
+  --vcd-page-bg: #ffffff;
+  --vcd-page-bg-soft: #f8fafc;
+  --vcd-card-bg: rgba(255, 255, 255, 0.88);
+  --vcd-card-border: #e2e8f0;
+  --vcd-card-border-alt: #dbe4f0;
+  --vcd-badge-blue-bg: #eff6ff;
+  --vcd-badge-blue-fg: #1d4ed8;
+  --vcd-badge-teal-bg: #f0fdfa;
+  --vcd-badge-teal-fg: #0f766e;
+  --vcd-header-bg: #fdf5e6;
+  --vcd-header-border: rgba(93, 64, 55, 0.1);
+  --vcd-stat-text: #18181b;
 }
 
 html.dark {
@@ -89,6 +106,49 @@ html.dark {
   --el-color-primary-dark-2: #c7d2fe;
 
   --el-border-color-light: #27272a;
+
+  /* 页面语义色 - 夜间覆盖 */
+  --vcd-page-title: #f1f5f9;
+  --vcd-page-title-alt: #e2e8f0;
+  --vcd-page-desc: #94a3b8;
+  --vcd-page-bg: #1e1e2e;
+  --vcd-page-bg-soft: #16161e;
+  --vcd-card-bg: rgba(30, 30, 46, 0.92);
+  --vcd-card-border: #2d2d3f;
+  --vcd-card-border-alt: #2d2d3f;
+  --vcd-badge-blue-bg: rgba(29, 78, 216, 0.2);
+  --vcd-badge-blue-fg: #93c5fd;
+  --vcd-badge-teal-bg: rgba(15, 118, 110, 0.2);
+  --vcd-badge-teal-fg: #5eead4;
+  --vcd-header-bg: #0f0f17;
+  --vcd-header-border: rgba(255, 255, 255, 0.08);
+  --vcd-stat-text: #f1f5f9;
+
+  /* Element Plus 深色覆盖 */
+  --el-bg-color: #1e1e2e;
+  --el-bg-color-page: #16161e;
+  --el-bg-color-overlay: #252535;
+  --el-text-color-primary: #f1f5f9;
+  --el-text-color-regular: #cbd5e1;
+  --el-text-color-secondary: #94a3b8;
+  --el-text-color-placeholder: #64748b;
+  --el-border-color: #2d2d3f;
+  --el-border-color-light: #252535;
+  --el-border-color-lighter: #1e1e2e;
+  --el-fill-color: #252535;
+  --el-fill-color-light: #1e1e2e;
+  --el-fill-color-blank: #1e1e2e;
+  --el-mask-color: rgba(0, 0, 0, 0.7);
+  --el-table-bg-color: #1e1e2e;
+  --el-table-tr-bg-color: #1e1e2e;
+  --el-table-header-bg-color: #16161e;
+  --el-table-border-color: #2d2d3f;
+  --el-table-text-color: #f1f5f9;
+  --el-table-header-text-color: #94a3b8;
+  --el-dialog-bg-color: #1e1e2e;
+  --el-input-bg-color: #252535;
+  --el-select-dropdown-bg-color: #252535;
+  --el-card-bg-color: #1e1e2e;
 }
 
 html,
@@ -206,4 +266,193 @@ html.dark .manage-layout .theme-toggle-btn:hover {
 .sales-page {
   background: transparent !important;
   box-shadow: none !important;
+}
+
+/* ========== 夜间模式全局补充 ========== */
+html.dark .el-table {
+  --el-table-bg-color: #1e1e2e;
+  --el-table-tr-bg-color: #1e1e2e;
+  --el-table-header-bg-color: #16161e;
+  --el-table-border-color: #2d2d3f;
+  --el-table-text-color: #f1f5f9;
+}
+
+html.dark .el-table th.el-table__cell {
+  background: #16161e !important;
+  color: #94a3b8 !important;
+}
+
+html.dark .el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+  background: #252535 !important;
+}
+
+html.dark .el-card {
+  background: #1e1e2e !important;
+  border-color: #2d2d3f !important;
+}
+
+html.dark .el-dialog {
+  background: #1e1e2e !important;
+  border: 1px solid #2d2d3f;
+}
+
+html.dark .el-dialog__title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .el-input__wrapper {
+  background: #252535 !important;
+  box-shadow: 0 0 0 1px #2d2d3f inset !important;
+}
+
+html.dark .el-input__inner {
+  color: #f1f5f9 !important;
+}
+
+html.dark .el-select-dropdown {
+  background: #252535 !important;
+  border-color: #2d2d3f !important;
+}
+
+html.dark .el-select-dropdown__item {
+  color: #cbd5e1 !important;
+}
+
+html.dark .el-select-dropdown__item.hover,
+html.dark .el-select-dropdown__item:hover {
+  background: #2d2d3f !important;
+}
+
+html.dark .el-form-item__label {
+  color: #cbd5e1 !important;
+}
+
+html.dark .el-breadcrumb__inner,
+html.dark .el-breadcrumb__separator {
+  color: #94a3b8 !important;
+}
+
+html.dark .el-tag {
+  border-color: transparent;
+}
+
+html.dark .el-descriptions__label,
+html.dark .el-descriptions__content {
+  background: #1e1e2e !important;
+  color: #cbd5e1 !important;
+  border-color: #2d2d3f !important;
+}
+
+html.dark .el-pagination {
+  --el-pagination-bg-color: #252535;
+  --el-pagination-text-color: #cbd5e1;
+  --el-pagination-border-radius: 8px;
+}
+
+html.dark .el-radio-button__inner {
+  background: #252535 !important;
+  border-color: #2d2d3f !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .el-radio-button__original-radio:checked + .el-radio-button__inner {
+  background: var(--vcd-primary) !important;
+  color: #fff !important;
+}
+
+/* ========== 夜间模式：页面容器和卡片补充 ========== */
+html.dark .page-container,
+html.dark .sales-page,
+html.dark .user-dashboard {
+  background: transparent !important;
+}
+
+html.dark .console-header,
+html.dark .analytics-header,
+html.dark .return-hero + .summary-grid .summary-card,
+html.dark .overview-card {
+  border-color: var(--vcd-card-border) !important;
+}
+
+html.dark .el-table--striped .el-table__body tr.el-table__row--striped td {
+  background: #252535 !important;
+}
+
+html.dark .el-table__body tr:hover > td {
+  background: #2d2d3f !important;
+}
+
+html.dark .el-input-number .el-input__wrapper {
+  background: #252535 !important;
+}
+
+html.dark .el-date-editor .el-input__wrapper {
+  background: #252535 !important;
+}
+
+html.dark .el-popper {
+  background: #252535 !important;
+  border-color: #2d2d3f !important;
+}
+
+html.dark .el-date-table td.today .el-date-table-cell__text {
+  color: var(--vcd-primary) !important;
+}
+
+/* 影片列表统计卡片数字 - 夜间模式保持亮色 */
+html.dark .value-primary { color: #818cf8 !important; }
+html.dark .value-success { color: #4ade80 !important; }
+html.dark .value-warning { color: #fbbf24 !important; }
+
+/* 店员首页 - 夜间模式修复 */
+/* KPI卡片数字保持亮色 */
+html.dark .kpi-value {
+  color: #f1f5f9 !important;
+}
+
+html.dark .kpi-value.danger {
+  color: #f87171 !important;
+}
+
+html.dark .kpi-label {
+  color: #94a3b8 !important;
+}
+
+html.dark .kpi-helper {
+  color: #64748b !important;
+}
+
+/* 英雄栏保持渐变背景和白色文字 */
+html.dark .hero-card {
+  background:
+    radial-gradient(circle at right top, rgba(255, 255, 255, 0.32), transparent 28%),
+    linear-gradient(135deg, #4f46e5 0%, #7c3aed 55%, #2563eb 100%) !important;
+}
+
+html.dark .hero-panel {
+  color: #fff !important;
+}
+
+html.dark .hero-panel * {
+  color: inherit;
+}
+
+html.dark .hero-title {
+  color: #fff !important;
+}
+
+html.dark .hero-desc {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+html.dark .hero-highlight-value {
+  color: #fff !important;
+}
+
+html.dark .hero-highlight-label {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+html.dark .hero-badge {
+  color: rgba(255, 255, 255, 0.9) !important;
 }

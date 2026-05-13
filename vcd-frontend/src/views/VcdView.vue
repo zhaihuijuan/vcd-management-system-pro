@@ -264,7 +264,7 @@ onMounted(() => {
 .page-title {
   font-size: 20px;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--vcd-page-title);
   white-space: nowrap;
   margin: 0;
   flex-shrink: 0;
@@ -282,8 +282,8 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid #e4e4e7;
+  background: var(--vcd-card-bg);
+  border: 1px solid var(--vcd-border);
   border-radius: 10px;
   padding: 10px 18px;
   flex: 1;
@@ -318,14 +318,14 @@ onMounted(() => {
 .stat-label {
   font-size: 15px;
   font-weight: 700;
-  color: #18181b;
+  color: var(--vcd-stat-text);
   white-space: nowrap;
 }
 
 .stat-value {
   font-size: 20px;
   font-weight: 800;
-  color: #18181b;
+  color: var(--vcd-stat-text);
   white-space: nowrap;
   flex: 1;
   text-align: center;

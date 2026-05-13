@@ -341,9 +341,9 @@ onMounted(loadData)
   align-items: center;
   gap: 16px;
   padding: 16px 18px;
-  border: 1px solid #dbe4f0;
+  border: 1px solid var(--vcd-card-border-alt);
   border-radius: 12px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  background: linear-gradient(180deg, var(--vcd-page-bg) 0%, var(--vcd-page-bg-soft) 100%);
 }
 
 .analytics-badge {
@@ -362,13 +362,13 @@ onMounted(loadData)
   margin-top: 10px;
   font-size: 20px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--vcd-page-title-alt);
 }
 
 .page-desc {
   margin: 0;
   margin-top: 6px;
-  color: #64748b;
+  color: var(--vcd-page-desc);
   line-height: 1.6;
 }
 
@@ -383,8 +383,8 @@ onMounted(loadData)
   overflow: hidden;
   padding: 18px;
   border-radius: 14px;
-  border: 1px solid #e2e8f0;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid var(--vcd-card-border);
+  background: linear-gradient(180deg, var(--vcd-page-bg) 0%, var(--vcd-page-bg-soft) 100%);
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
 }
 
@@ -404,14 +404,14 @@ onMounted(loadData)
 }
 
 .summary-card span {
-  color: #64748b;
+  color: var(--vcd-page-desc);
   font-size: 12px;
 }
 
 .summary-card strong {
   display: block;
   margin-top: 10px;
-  color: #0f172a;
+  color: var(--vcd-page-title-alt);
   font-size: 30px;
   line-height: 1;
   font-weight: 700;
@@ -467,7 +467,7 @@ onMounted(loadData)
 .table-panel,
 .insight-panel {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--vcd-card-border);
   border-radius: 12px;
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
   padding: 20px;
@@ -483,7 +483,7 @@ onMounted(loadData)
 .panel-title {
   font-size: 17px;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--vcd-page-title-alt);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -534,7 +534,7 @@ onMounted(loadData)
   padding: 12px;
   border-radius: 12px;
   border: 1px solid #cbd5e1;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  background: linear-gradient(180deg, var(--vcd-page-bg) 0%, var(--vcd-page-bg-soft) 100%);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
@@ -587,14 +587,14 @@ onMounted(loadData)
 }
 
 .featured-name {
-  color: #0f172a;
+  color: var(--vcd-page-title-alt);
   font-size: 14px;
   font-weight: 600;
 }
 
 .featured-phone {
   margin-top: 2px;
-  color: #64748b;
+  color: var(--vcd-page-desc);
   font-size: 12px;
 }
 
@@ -609,7 +609,7 @@ onMounted(loadData)
 
 .featured-note {
   margin-top: 8px;
-  color: #64748b;
+  color: var(--vcd-page-desc);
   font-size: 12px;
   line-height: 1.5;
 }

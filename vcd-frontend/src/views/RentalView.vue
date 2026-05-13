@@ -140,6 +140,6 @@ onMounted(async () => {
 <style scoped>
 .page-container { padding: 4px; }
 .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-.page-title { font-size: 20px; font-weight: 600; color: #1e293b; }
+.page-title { font-size: 20px; font-weight: 600; color: var(--vcd-page-title); }
 .data-table { border-radius: 8px; overflow: hidden; }
 </style>

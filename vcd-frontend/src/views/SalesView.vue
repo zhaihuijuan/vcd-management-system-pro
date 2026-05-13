@@ -249,7 +249,7 @@ onMounted(async () => {
 
 <style scoped>
 .sales-page {
-  background: #fff;
+  background: transparent;
   border-radius: 8px;
   padding: 20px 24px 24px;
   min-height: calc(100vh - 120px);
@@ -260,7 +260,7 @@ onMounted(async () => {
   margin: 0 0 16px;
   font-size: 18px;
   font-weight: 700;
-  color: #262626;
+  color: var(--vcd-page-title);
 }
 
 .toolbar {
